@@ -8,6 +8,7 @@
 
 <script>
 
+    //1.set
     const s = new Set([1, 2, 3, 1, 2, 3]);
     //console.log([...s]);   //数组去重
 
@@ -18,7 +19,7 @@
 
     console.log(s);
 
-    // map是有key的，不能放重复的
+    //2.map是有key的，不能放重复的
     const m = new Map();
     m.set('name', 'yeqing');
     console.log(m);
@@ -26,7 +27,7 @@
     const w = new WeakMap();
     console.log(w);
 
-    // Object.defineProperty(); 拦截器
+    //3.Object.defineProperty(); 拦截器
     const obj = {};
     let other = '';
     Object.defineProperty(obj, 'name', {
@@ -46,6 +47,7 @@
     console.log(obj.name);
 
 
+    //4.对象的setter和getter
     const obj1 = {
         other: 123,
         get name() {
@@ -57,10 +59,10 @@
     }
 
     obj1.name = 456;
-    console.log(obj1.other);   //对象的setter和getter
+    console.log(obj1.other);
 
 
-    //vue数据劫持  (把所有的属性都改成get和set方法)
+    //5.vue数据劫持  (把所有的属性都改成get和set方法)
     const data = {
         name: 'yeqing',
         age: 18,
@@ -75,11 +77,56 @@
 
     function observer(obj) {  //object.defineProperty只能用在对象上，数组也不识别
 
+        if (typeof obj !== 'object') return obj;
+        for (let attr in obj) {
+            defineReactive(obj, attr, obj[attr]);
+        }
+    }
+
+    function defineReactive(obj, attr, value) {
+        observer(value);
+        Object.defineProperty(obj, attr, {
+            get() {
+                return value;
+            },
+            set(val) {
+                observer(value);
+                update();
+                value = val;
+            }
+        })
     }
 
     observer(data);
+    data.name = 'yqyqyq';
+    data.address.location = '南京';
+    console.log(data);
 
 
+    //6.深拷贝-递归
+    const obj4 = {
+        name: 'yeqing',
+        age: 20,
+        location: {
+            address: '南京'
+        }
+    };
+
+    function testObserver(obj) {
+        const newObj = {};
+        for (let attr in obj) {
+            if (typeof obj[attr] === 'object') {
+                newObj[attr] = testObserver(obj[attr]);
+            }else {
+                newObj[attr] = obj[attr];
+            }
+        }
+        return newObj;
+    }
+
+    const a = testObserver(obj4);
+    obj4.location.address = 'yq';
+    console.log(a);
 
 </script>
 
