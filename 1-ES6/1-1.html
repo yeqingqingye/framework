@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    const s = new Set([1, 2, 3, 1, 2, 3]);
+    //console.log([...s]);   //数组去重
+
+    s.add(7);  //添加
+    s.delete(7); //删除
+
+    //s.has()
+
+    console.log(s);
+
+    // map是有key的，不能放重复的
+    const m = new Map();
+    m.set('name', 'yeqing');
+    console.log(m);
+
+    const w = new WeakMap();
+    console.log(w);
+
+    // Object.defineProperty(); 拦截器
+    const obj = {};
+    let other = '';
+    Object.defineProperty(obj, 'name', {
+        //value: 123,
+        //enumerable: true,   //是否可枚举
+        //configurable: true  //是否可删除
+        //writable:false      //是否可重写
+        get() {
+            //在这里面增加自己的逻辑代码
+            return other;
+        },
+        set(val) {
+            other = val;
+        }
+    });
+    obj.name = 456;
+    console.log(obj.name);
+
+
+    const obj1 = {
+        other: 123,
+        get name() {
+            return this.other;
+        },
+        set name(val) {
+            this.other = val;
+        }
+    }
+
+    obj1.name = 456;
+    console.log(obj1.other);   //对象的setter和getter
+
+
+    //vue数据劫持  (把所有的属性都改成get和set方法)
+    const data = {
+        name: 'yeqing',
+        age: 18,
+        address: {
+            location: '合肥'
+        }
+    }
+
+    function update() {   //模拟的更新方法
+        console.log('更新视图');
+    }
+
+    function observer(obj) {  //object.defineProperty只能用在对象上，数组也不识别
+
+    }
+
+    observer(data);
+
+</script>
+
+</body>
+</html>
