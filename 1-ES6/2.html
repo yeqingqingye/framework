@@ -64,6 +64,7 @@
         return (...args) => fns.reduceRight((a, b) => b(a), lastFn(...args));
     }
 
+    //目前看不太懂
     function compose1(...fns) {
         return fns.reduce((a, b) => {
             return (...args) => {
@@ -71,7 +72,6 @@
             }
         });
     }
-
 
     const r = compose1(add, toUpper, sum)('yq', '18');
     console.log(r);
