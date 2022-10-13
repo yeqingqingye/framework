@@ -8,11 +8,39 @@
 
 <script>
 
-
     const user = {name: 'yeqing', age: 18};
     const fUser = Object.freeze(user);
     //fUser.age = 12;
 
+
+    //object.defineProperty   不支持数组的更新
+    //希望数组变化就能更新视图
+
+    //proxy
+
+    const arr = [1, 2, 3];
+    let proxy = new Proxy(arr, {
+        set(target, key, value) {
+            target[key] = value;
+        },
+        get(target, key) {
+            return target[key];
+        }
+    });
+
+    proxy[0] = 123;
+
+    // reduce
+
+    // reduce常见的功能，多个数据最终变成一个数据，
+
+    const keys = ['name', 'age'];
+    const values = ['yq', 18];
+    const obj = keys.reduce((a, b, currentIndex) => {
+        a[b] = values[currentIndex]
+        return a;
+    }, {});
+    console.log(obj);
 
 </script>
 
