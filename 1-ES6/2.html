@@ -34,13 +34,47 @@
 
     // reduce常见的功能，多个数据最终变成一个数据，
 
-    const keys = ['name', 'age'];
-    const values = ['yq', 18];
-    const obj = keys.reduce((a, b, currentIndex) => {
-        a[b] = values[currentIndex]
-        return a;
-    }, {});
-    console.log(obj);
+    // const keys = ['name', 'age'];
+    // const values = ['yq', 18];
+    // const obj = keys.reduce((a, b, currentIndex) => {
+    //     a[b] = values[currentIndex]
+    //     return a;
+    // }, {});
+    // console.log(obj);
+
+    function sum(a, b) {
+        return a + b;
+    }
+
+    function toUpper(str) {
+        return str.toUpperCase();
+    }
+
+    function add(str) {
+        return '***' + str + '****';
+    }
+
+    //const r = add(toUpper(sum('yq', '18')));    巨low
+    //console.log(r);
+
+
+    //函数链式组合
+    function compose(...fns) {
+        const lastFn = fns.pop();
+        return (...args) => fns.reduceRight((a, b) => b(a), lastFn(...args));
+    }
+
+    function compose1(...fns) {
+        return fns.reduce((a, b) => {
+            return (...args) => {
+                return a(b(...args));
+            }
+        });
+    }
+
+
+    const r = compose1(add, toUpper, sum)('yq', '18');
+    console.log(r);
 
 </script>
 
