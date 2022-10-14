@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    //es6类 es5构造函数
+
+
+    // function Animal(name) {
+    //     //属性 分为2种 实例上的属性 公有属性
+    //     this.name = name;
+    //     this.arr = [1, 2, 3];
+    // }
+    //
+    // Animal.prototype.address = {location: '山上'};
+    //
+    // const a1 = new Animal('小鸡');
+    // const a2 = new Animal('猴子');
+
+    //每个实例都有__proto__指向所属类的原型 , constructor指向所属类
+    //console.log(a1.address === a2.address);
+    //console.log(a1.constructor === Animal);
+
+    //console.dir(Animal)
+    //console.log(a1);
+
+    //console.log(a1.__proto__ === Animal.prototype);
+    //console.log(a1.__proto__.__proto__);
+
+    //console.log(a1.constructor);
+    //console.log(Animal.constructor);
+
+    //console.log(Animal.__proto__ === Function.prototype);
+
+    //console.log(a1.__proto__.__proto__ === Object.prototype);
+    //console.log(Object.prototype.__proto__);   //null
+    //console.log(Function.prototype__proto__)   //undefined
+
+    //类的继承
+
+    class Animal {
+
+        static flag = true;    //静态属性
+
+        constructor(name) {   //私有属性
+            this.name = name;
+            this.eat = '吃肉';
+        }
+
+        say() {               //公有属性
+            console.log('say');
+        }
+    }
+
+    //console.log(Animal);
+    //const a1 = new Animal();
+    //console.log(a1)
+    //a1.constructor.prototype.say();
+    //a1.__proto__.say();
+    //console.log(Animal.flag);
+
+    class Tiger extends Animal {    //实例 + 继承
+
+    }
+
+    const tiger = new Tiger();
+    tiger.say();
+    console.log(tiger.eat);
+    console.log(tiger.flag);
+
+
+</script>
+
+
+</body>
+</html>
